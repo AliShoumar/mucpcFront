@@ -1,0 +1,21 @@
+.login_page{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-light--1);
+}
+
+.container{
+    border: 0.3rem solid #233062;
+    width: 19rem;
+    height: 24rem;
+    padding: 1rem 2.5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background-color: var(--color-light--1);
+}
+

@@ -1,0 +1,36 @@
+/* .header a:active,
+.header a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: yellow;
+    font-weight: 900;
+    background-color: #1976d2;
+    padding: 10px 20px;
+    border-radius: 15px;
+} */
+/* .logo{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: yellow;
+    font-weight: 900;
+    background-color: #1976d2;
+    padding: 10px 20px;
+    border-radius: 15px;
+} */
+.header{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items:  center;
+    justify-content: space-between;
+}
+.leftnav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100px;
+}
+.leftnav div{
+    cursor: pointer;
+}

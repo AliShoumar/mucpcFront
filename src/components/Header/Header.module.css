@@ -1,0 +1,43 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-blue);
+    margin-bottom: 2rem;
+}
+
+.logo_container{
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.logo{
+    font-size: 2rem !important;
+    width: 100%;
+    color: var(--color-yellow);
+}
+
+.nav{
+    width: 30%;
+}
+.main_nav{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+.main_nav li{
+    margin-left: 2rem;
+}
+
+.main_nav li a{
+    color: white;
+    text-decoration: none;
+}
+
+.main_nav li a:hover,
+.main_nav li a:active{
+    color: var(--color-yellow);
+}

@@ -1,0 +1,9 @@
+.workshop_info {
+	margin: 4rem 5rem;
+}
+.head_section {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
