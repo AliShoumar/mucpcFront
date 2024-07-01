@@ -15,6 +15,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { toast } from 'react-toastify';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Question {
 	id: number;
@@ -45,6 +46,9 @@ export const WorkShopFormPage = () => {
 
 	const [formType, setFormType] = React.useState<string>('registration');
 
+	const [formId, setFormId] = React.useState(null);
+	const [deleteDisabled, setDeleteDisabled] = React.useState(true);
+
 	React.useEffect(() => {
 		const fetchWorkshop = async () => {
 			try {
@@ -69,8 +73,69 @@ export const WorkShopFormPage = () => {
 			}
 		};
 		fetchWorkshop();
-		return () => { };
+		return () => {};
 	}, [workshopId]);
+
+	React.useEffect(() => {
+		const fetchForm = async () => {
+			let url = '';
+			if (formType === 'registration') {
+				url = `https://localhost:44344/api/WorkShop/getRegistrationForm?workshopId=${workshopId}`;
+			} else if (formType === 'evaluation') {
+				url = `https://localhost:44344/api/WorkShop/getEvaluationForm?workshopId=${workshopId}`;
+			}
+
+			try {
+				const response = await fetch(url, {
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${authToken}`,
+					},
+				});
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				const data = await response.json();
+				if (data && data.form) {
+					setFormId(data.form.id);
+					setDeleteDisabled(false);
+				} else {
+					setDeleteDisabled(true);
+				}
+			} catch (error) {
+				setDeleteDisabled(true);
+			}
+		};
+
+		fetchForm();
+	}, [formType]);
+
+	const handleDelete = async () => {
+		if (formId) {
+			try {
+				const response = await fetch(
+					`https://localhost:44344/api/Form/delete?formId=${formId}`,
+					{
+						method: 'DELETE',
+
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${authToken}`,
+						},
+					}
+				);
+				if (!response.ok) {
+					toast.success('Something went wrong');
+					throw new Error('Network response was not ok');
+				}
+				setFormId(null);
+				setDeleteDisabled(true);
+				toast.success('Form Deleted');
+			} catch (error) {
+				console.error('Failed to delete the form:', error);
+			}
+		}
+	};
 
 	const formData = {
 		title: workshop.title,
@@ -206,18 +271,17 @@ export const WorkShopFormPage = () => {
 										'aria-labelledby': labelId,
 									}}
 									sx={{
-									
 										'&.Mui-checked': {
-										  color: '#1b255a',
+											color: '#1b255a',
 										},
-									
+
 										'&.Mui-focusVisible': {
-										  backgroundColor: '#1b255a',
+											backgroundColor: '#1b255a',
 										},
 										'&.MuiCheckbox-indeterminate': {
-										  color: '#f3db43',
+											color: '#f3db43',
 										},
-									  }}
+									}}
 								/>
 							</ListItemIcon>
 							<ListItemText id={labelId} primary={value.label} />
@@ -231,7 +295,7 @@ export const WorkShopFormPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(JSON.stringify(formData))
+		console.log(JSON.stringify(formData));
 		try {
 			const response = await fetch(`https://localhost:44344/api/Form/create`, {
 				method: 'POST',
@@ -246,7 +310,11 @@ export const WorkShopFormPage = () => {
 				toast.success('Form created successfully');
 				navigate(`/workshop/${workshopId}`);
 			} else {
-				toast.error(`Workshop already have ${formType == 'registration' ? 'registration' : 'evaluation'} form`);
+				toast.error(
+					`Workshop already have ${
+						formType == 'registration' ? 'registration' : 'evaluation'
+					} form`
+				);
 			}
 		} catch (error) {
 			console.error('Error creating form:', error.message);
@@ -261,7 +329,9 @@ export const WorkShopFormPage = () => {
 					style={{
 						margin: '2rem 4rem',
 					}}>
-					<Button onClick={() => navigate(`/workshop/${workshopId}`)} 	variant="contained"
+					<Button
+						onClick={() => navigate(`/workshop/${workshopId}`)}
+						variant="contained"
 						sx={{
 							color: '#f3db43',
 							backgroundColor: '#233062',
@@ -272,6 +342,22 @@ export const WorkShopFormPage = () => {
 						}}>
 						<ArrowBackIcon />
 					</Button>
+					<div>
+						<button 
+						onClick={handleDelete} 
+						disabled={deleteDisabled}
+						style={{
+							margin: "20px",
+							cursor: deleteDisabled ? "" : "pointer",
+						  }}
+						>
+							<DeleteIcon 
+							style={{
+								color: deleteDisabled ? "initial" : "red"
+							  }}
+							/>
+						</button>
+					</div>
 				</div>
 				<Grid container spacing={2} justifyContent="center" alignItems="center">
 					<Grid item>{customList(left)}</Grid>
@@ -289,22 +375,22 @@ export const WorkShopFormPage = () => {
 								<MenuItem value="evaluation">Evaluation Form</MenuItem>
 							</TextField>
 							<Button
-								 sx={{
+								sx={{
 									my: 0.5,
-								
+
 									'&:hover': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:focus': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:active': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
-								  }}
+								}}
 								variant="outlined"
 								size="small"
 								onClick={handleAllRight}
@@ -313,22 +399,22 @@ export const WorkShopFormPage = () => {
 								≫
 							</Button>
 							<Button
-								 sx={{
+								sx={{
 									my: 0.5,
-								
+
 									'&:hover': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:focus': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:active': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
-								  }}
+								}}
 								variant="outlined"
 								size="small"
 								onClick={handleCheckedRight}
@@ -337,22 +423,22 @@ export const WorkShopFormPage = () => {
 								&gt;
 							</Button>
 							<Button
-								 sx={{
+								sx={{
 									my: 0.5,
-								
+
 									'&:hover': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:focus': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:active': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
-								  }}
+								}}
 								variant="outlined"
 								size="small"
 								onClick={handleCheckedLeft}
@@ -361,22 +447,22 @@ export const WorkShopFormPage = () => {
 								&lt;
 							</Button>
 							<Button
-								 sx={{
+								sx={{
 									my: 0.5,
-								
+
 									'&:hover': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:focus': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
 									'&:active': {
-									  backgroundColor: '#1b255a', 
-									  color: '#f3db43', 
+										backgroundColor: '#1b255a',
+										color: '#f3db43',
 									},
-								  }}
+								}}
 								variant="outlined"
 								size="small"
 								onClick={handleAllLeft}
@@ -416,11 +502,10 @@ export const WorkShopFormPage = () => {
 									backgroundColor: '#1b255a',
 								},
 								marginRight: 2,
-							}}
-					>
+							}}>
 							Add Question
 						</Button>
-						<Button 
+						<Button
 							sx={{
 								color: '#f3db43',
 								backgroundColor: '#233062',
@@ -429,7 +514,8 @@ export const WorkShopFormPage = () => {
 								},
 								marginRight: 2,
 							}}
-						variant="outlined" onClick={handleSubmit}>
+							variant="outlined"
+							onClick={handleSubmit}>
 							Done
 						</Button>
 					</Grid>
