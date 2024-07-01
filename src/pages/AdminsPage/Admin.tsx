@@ -33,6 +33,7 @@ export const Admin = () => {
 	const [selectedRole, setSelectedRole] = useState('Admin');
 	const [studentData, setStudentData] = useState([]);
 	const [studentId, setStudentId] = useState('');
+	const [role, setRole] = useState(1);
 
 	const [firstName, setFirstName] = useState('');
 	const [middleName, setMiddleName] = useState('');
@@ -65,6 +66,10 @@ export const Admin = () => {
 			console.error('Error fetching admin data:', error);
 			toast.error('Failed to fetch admin data.');
 		}
+	};
+
+	const handleChange = (event) => {
+		setRole(event.target.value);
 	};
 
 	const fetchStudentData = async () => {
@@ -289,13 +294,15 @@ export const Admin = () => {
 				body: JSON.stringify({
 					email: newEmail,
 					password: newPassword,
-					roleId: 1,
+					roleId: role,
 				}),
 			});
 			if (response.ok) {
 				fetchData();
 				toast.success('Admin created successfully.');
 				setNewAdminOpen(false);
+				setNewPassword("")
+				setNewEmail("")
 			} else {
 				console.error('Failed to create admin.');
 				toast.error('Failed to create admin.');
@@ -304,6 +311,7 @@ export const Admin = () => {
 			console.error('Error creating admin:', error);
 			toast.error('Error creating admin.');
 		}
+	
 	};
 	const handleStudentCreate = async () => {
 		try {
@@ -546,6 +554,20 @@ export const Admin = () => {
 								p: 4,
 								width: 400,
 							}}>
+							<FormControl
+								variant="outlined"
+								style={{ margin: '20px', minWidth: 120 }}>
+								<InputLabel id="role-select-label">Role</InputLabel>
+								<Select
+									labelId="role-select-label"
+									id="role-select"
+									value={role}
+									onChange={handleChange}
+									label="Role">
+									<MenuItem value={1}>Manager</MenuItem>
+									<MenuItem value={2}>Staff</MenuItem>
+								</Select>
+							</FormControl>
 							<TextField
 								label="Email"
 								fullWidth
