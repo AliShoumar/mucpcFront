@@ -34,8 +34,7 @@ export const EvaluationPage = () => {
         const studentId = localStorage.getItem('userId');
         try {
             const response = await fetch(
-                // `https://localhost:44344/api/Student/workShops?studentId=${studentId}`,
-                'https://localhost:44344/api/WorkShop/getall',
+                `https://localhost:44344/api/Student/workShops?studentId=${studentId}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -120,9 +119,10 @@ export const EvaluationPage = () => {
 	
 			if (!response.ok) {
 				throw new Error(`Student is not registered in this workshop!`);
+                toast.error('You are not registered in this workshop')
 			}
 	
-			toast.success('Evaluation submitted successfully');
+			toast.success('Evaluation submitted');
 			setOpenEvaluationDialog(false);
 		} catch (error) {
 			console.error('Error submitting evaluation:', error);

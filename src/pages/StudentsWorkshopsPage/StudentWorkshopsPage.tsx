@@ -175,7 +175,9 @@ export const StudentWorkshopsPage = () => {
 				Evaluate
 			</Button>
 			<Grid container spacing={3}>
-				{workshops.map((workshop) => (
+				{workshops
+				.filter((workshop) => workshop.isActive) 
+				.map((workshop) => (
 					<Grid item xs={12} sm={6} md={4} key={workshop.id}>
 						<Card>
 							<CardContent>

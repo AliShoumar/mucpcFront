@@ -24,7 +24,7 @@ import { useTheme } from '@emotion/react';
 import { useNavigate } from 'react-router-dom';
 
 const apiUrl = 'https://localhost:44344/api/Instructor/';
-const updateUrl = 'update/';
+const updateUrl = 'update';
 const deleteUrl = 'delete/?instructorId=';
 const createUrl = 'create/';
 const workshopUrl = 'getWorkShops?instructorId=';
@@ -167,6 +167,7 @@ export const InstructorTable = () => {
 					registrationLink: 'string',
 					maxNumberOfAttendees: 0,
 					rating: 0,
+					isActive: true,
 					instructorId: 0,
 				},
 			],
