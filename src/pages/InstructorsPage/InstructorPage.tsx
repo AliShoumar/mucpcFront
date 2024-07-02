@@ -314,18 +314,14 @@ export const InstructorTable = () => {
 				}}>
 				<Button
 					onClick={handleCreate}
-
 					variant="contained"
-                  
 					sx={{
-						color: '#f3db43', 
-						backgroundColor: '#233062', 
+						color: '#f3db43',
+						backgroundColor: '#233062',
 						'&:hover': {
-						  backgroundColor: '#1b255a', 
+							backgroundColor: '#1b255a',
 						},
-					  }}
-
-					>
+					}}>
 					Create
 				</Button>
 			</div>
@@ -333,7 +329,8 @@ export const InstructorTable = () => {
 				<Table>
 					<TableHead>
 						<TableRow>
-							<TableCell>ID</TableCell>
+							{isSmallScreen ? null : <TableCell>ID</TableCell>}
+
 							<TableCell>First Name</TableCell>
 							{isSmallScreen ? null : <TableCell>Middle Name</TableCell>}
 							<TableCell>Last Name</TableCell>
@@ -349,7 +346,8 @@ export const InstructorTable = () => {
 					<TableBody>
 						{data.map((row) => (
 							<TableRow key={row.id}>
-								<TableCell>{row.id}</TableCell>
+								{isSmallScreen ? null : <TableCell>{row.id}</TableCell>}
+
 								<TableCell>{row.firstName}</TableCell>
 								{isSmallScreen ? null : <TableCell>{row.middleName}</TableCell>}
 								<TableCell>{row.lastName}</TableCell>
@@ -403,7 +401,7 @@ export const InstructorTable = () => {
 								<TableRow>
 									<TableCell>ID</TableCell>
 									<TableCell>Title</TableCell>
-									<TableCell>Description</TableCell>
+									{isSmallScreen ? null : <TableCell>Description</TableCell>}
 									<TableCell>Actions</TableCell>
 								</TableRow>
 							</TableHead>
@@ -412,7 +410,8 @@ export const InstructorTable = () => {
 									<TableRow key={workshop.id}>
 										<TableCell>{workshop.number}</TableCell>
 										<TableCell>{workshop.title}</TableCell>
-										<TableCell>{workshop.description}</TableCell>
+										{isSmallScreen ? null :<TableCell>{workshop.description}</TableCell>}
+										
 										<TableCell>
 											<Button
 												onClick={() => handleNavigateToURL(workshop.id)}

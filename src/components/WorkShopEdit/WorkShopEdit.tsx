@@ -174,17 +174,21 @@ export const WorkShopEdit = (): ReactElement => {
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<TextField
-							id="description"
-							label="Description"
+					<TextField
+							id="instructorId"
+							select
+							label="Instructor"
 							variant="filled"
-							multiline
-							rows={4}
 							fullWidth
-							name="description"
-							value={formData.description}
-							onChange={handleChange}
-						/>
+							name="instructorId"
+							value={formData.instructorId}
+							onChange={handleInstructorChange}>
+							{instructors.map((instructor) => (
+								<MenuItem key={instructor.id} value={instructor.id}>
+									{`${instructor.firstName} ${instructor.lastName}`}
+								</MenuItem>
+							))}
+						</TextField>
 					</Grid>
 					<Grid item xs={12} sm={6}>
 						<TextField
@@ -233,15 +237,14 @@ export const WorkShopEdit = (): ReactElement => {
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<TextField
-							id="objectives"
-							label="Objectives"
+					<TextField
+							id="maxNumberOfAttendees"
+							label="Max Number Of Attendees"
 							variant="filled"
-							multiline
-							rows={4}
+							type="number"
 							fullWidth
-							name="objectives"
-							value={formData.objectives}
+							name="maxNumberOfAttendees"
+							value={formData.maxNumberOfAttendees}
 							onChange={handleChange}
 						/>
 					</Grid>
@@ -305,33 +308,32 @@ export const WorkShopEdit = (): ReactElement => {
 						/>
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<TextField
-							id="maxNumberOfAttendees"
-							label="Max Number Of Attendees"
+					<TextField
+							id="objectives"
+							label="Objectives"
 							variant="filled"
-							type="number"
+							multiline
+							rows={4}
 							fullWidth
-							name="maxNumberOfAttendees"
-							value={formData.maxNumberOfAttendees}
+							name="objectives"
+							value={formData.objectives}
 							onChange={handleChange}
 						/>
+					
 					</Grid>
 					<Grid item xs={12} sm={6}>
-						<TextField
-							id="instructorId"
-							select
-							label="Instructor"
+					<TextField
+							id="description"
+							label="Description"
 							variant="filled"
+							multiline
+							rows={4}
 							fullWidth
-							name="instructorId"
-							value={formData.instructorId}
-							onChange={handleInstructorChange}>
-							{instructors.map((instructor) => (
-								<MenuItem key={instructor.id} value={instructor.id}>
-									{`${instructor.firstName} ${instructor.lastName}`}
-								</MenuItem>
-							))}
-						</TextField>
+							name="description"
+							value={formData.description}
+							onChange={handleChange}
+						/>
+					
 					</Grid>
 				</Grid>
 				<Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>

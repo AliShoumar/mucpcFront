@@ -1,3 +1,4 @@
+import { createTheme, useMediaQuery } from '@mui/material';
 import { useNavigate} from 'react-router-dom';
 
 interface MenuItemProps {
@@ -10,9 +11,56 @@ interface MenuItemProps {
 export const MenuItem: React.FC<MenuItemProps> = ({ title, imageUrl, size, linkUrl }) => {
   
   const navigate = useNavigate();
+	const theme = createTheme({
+		breakpoints: {
+			values: {
+				xs: 0,
+				sm: 600,
+				md: 960,
+				lg: 1280,
+				xl: 1920,
+			},
+		},
+	});
+	const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+  if(isSmallScreen){
+    return (
+      <div
+      onClick={() => navigate(`${linkUrl}`)}
+      style={{
+        width: '100%', 
+        height: '150px', 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid black',
+        margin: '10px 0', 
+        overflow: 'hidden',
+        position: 'relative',
+        cursor: 'pointer',
+        touchAction: 'manipulation',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundImage: `url(${imageUrl})`,
+          transition: 'transform 0.5s ease', 
+          transform: 'scale(1)',
+        }}
+      />
+    </div>
+    )
+  }
 
   return (
     
+
     <div
     onClick={()=> navigate(`${linkUrl}`)}
       style={{
@@ -27,9 +75,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({ title, imageUrl, size, linkU
         overflow: 'hidden',
         position: 'relative',
         cursor: 'pointer',
-      }}
-   
-    >
+      }}>
       <div
         style={{
           width: '100%',

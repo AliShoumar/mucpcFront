@@ -28,7 +28,7 @@ export const WorkShopForm = (): ReactElement => {
     dateAndTime: new Date().toISOString(),
     speaker: '',
     organizedBy: '',
-    registrationLink: '',
+    registrationLink: 'http://localhost:5173/students',
     maxNumberOfAttendees: 0,
   });
 
@@ -116,15 +116,14 @@ export const WorkShopForm = (): ReactElement => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              id="description"
-              label="Description"
+          <TextField
+              id="maxNumberOfAttendees"
+              label="Max Number Of Attendees"
               variant="filled"
-              multiline
-              rows={4}
+              type="number"
               fullWidth
-              name="description"
-              value={formData.description}
+              name="maxNumberOfAttendees"
+              value={formData.maxNumberOfAttendees}
               onChange={handleChange}
             />
           </Grid>
@@ -252,7 +251,7 @@ export const WorkShopForm = (): ReactElement => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            {/* <TextField
               id="registrationLink"
               label="Registration Link"
               variant="filled"
@@ -260,19 +259,21 @@ export const WorkShopForm = (): ReactElement => {
               name="registrationLink"
               value={formData.registrationLink}
               onChange={handleChange}
+            /> */}
+              <TextField
+              id="description"
+              label="Description"
+              variant="filled"
+              multiline
+              rows={4}
+              fullWidth
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
-              id="maxNumberOfAttendees"
-              label="Max Number Of Attendees"
-              variant="filled"
-              type="number"
-              fullWidth
-              name="maxNumberOfAttendees"
-              value={formData.maxNumberOfAttendees}
-              onChange={handleChange}
-            />
+          
           </Grid>
         </Grid>
         <Box sx={{ mt: 2, textAlign: 'right' }}>
